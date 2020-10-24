@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Routes
-app.get("/notes", function(req, res) {
+app.get("/api/notes", function(req, res) {
     // var dbnote = req.params.db
     // console.log(dbnote);
     res.end();
