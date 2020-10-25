@@ -51,16 +51,24 @@ app.post("/api/notes", function (req, res) {
 
 // Delete the specified Note
 app.delete("/api/notes", function (req, res) {
- 
-
+    const noteID = req.params.id;
+    fs.readFile(path.join(__dirname, "", "./db/db.json"), function (err, data) {
+        if (err) throw err;
+        const notes = JSON.parse(data);
+        const deleteNote = notes.filter((noteObj) => noteObj.id !== noteID)
+        fs.writeFile("./db/db.json", JSON.stringify(deleteNote), function (err, data){
+            if (err) throw err
+        })
+        res.json(deleteNote)
+    })
+    
 })
 
 // Listener
 app.listen(PORT, () => {
-    console.log("app.listen");
     console.log("==================================")
     console.log("Listening to port: " + PORT);
-    console.log("Notes Database:");
+    console.log("db.json file");
     console.log(db);
     console.log("==================================")
 }); 
