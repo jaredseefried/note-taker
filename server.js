@@ -5,6 +5,7 @@ const express = require("express");
 const app = express();
 const db = require("./db/db.json");
 const uuid = require("uuid");
+
 const PORT = process.env.PORT || 4001;
 
 
@@ -18,43 +19,30 @@ app.use(express.json());
 //Routes
 app.get("/api/notes", function (req, res) {
     res.sendFile(path.join(__dirname, "/db/db.json"))
+    console.log(path.body);
+    res.send(req.body)
+    res.end()
 })
 
 app.post("/api/notes", function (req, res) {
-
-    res.sendFile(path.join(__dirname, "/db/db.json"), function (err, data) {
-        if (err) {
-            throw err
-        }
-
-        const newNote = JSON.parse(data);
-        console.log(newNote);
-        const newnote2 = req.body
-
-
-        newNote2.id = uuid.v1(); //unique ID
-        newNote.push(newNote2);
-
-        const finalNewNote = JSON.stringify(newNote);
-
-        fs.writeFile(path.join(__dirname, "./db/db.json"), finalNewNote, (err) => {
-            if (err) {
-                throw err;
-            }
-        });
-
-        res.json(newNote2);
-        res.end()
+    res.sendFile(path.join(__dirname, "./db/db.json"))
+    let newNote = req.body;
+    res.send(newNote)
+    console.log(newNote);
+    const updatedNewNote = JSON.stringify(newNote)
+    fs.writeFile("./db/db.json", updatedNewNote, function (err, data){
+        if (err){
+            throw err 
+        } 
     })
-    
+    // res.json(newNote)
+    res.end()
 })
-
-
-
 
 
 app.delete("/api/notes", function (req, res) {
 
+    res.end()
 })
 //listeners 
 app.listen(PORT, () => {
