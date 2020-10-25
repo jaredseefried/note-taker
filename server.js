@@ -18,15 +18,16 @@ app.use(express.json());
 
 //Routes
 app.get("/api/notes", function (req, res) {
-    fs.readFile(path.join(__dirname, "", "/db/db.json"), function (err, data){
-        if (err){
+    fs.readFile(path.join(__dirname, "", "/db/db.json"), function (err, data) {
+        if (err) {
             throw err
         }
     })
-    // res.sendFile(path.join(__dirname, "/db/db.json"))
+
     console.log(req.body);
     res.send(req.body)
-    res.end()
+
+    // res.end()
 })
 
 app.post("/api/notes", function (req, res) {
@@ -35,10 +36,10 @@ app.post("/api/notes", function (req, res) {
     res.send(newNote)
     console.log(newNote);
     const updatedNewNote = JSON.stringify(newNote)
-    fs.writeFile("./db/db.json", updatedNewNote, function (err, data){
-        if (err){
-            throw err 
-        } 
+    fs.writeFile("./db/db.json", updatedNewNote, function (err, data) {
+        if (err) {
+            throw err
+        }
     })
     // res.json(newNote)
     res.end()
@@ -51,6 +52,10 @@ app.delete("/api/notes", function (req, res) {
 })
 //listeners 
 app.listen(PORT, () => {
-    console.log("Listening to port:" + PORT);
+    console.log("app.listen");
+    console.log("==================================")
+    console.log("Listening to port: " + PORT);
+    console.log("Notes Databse:");
     console.log(db);
+    console.log("==================================")
 }); 
