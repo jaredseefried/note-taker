@@ -18,7 +18,7 @@ app.use(express.json());
 
 //Routes
 app.get("/api/notes", function (req, res) {
-    fs.readFile(path.join(__dirname, "/db/db.json"), function (err, data){
+    fs.readFile(path.join(__dirname, "", "/db/db.json"), function (err, data){
         if (err){
             throw err
         }
