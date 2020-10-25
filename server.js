@@ -17,8 +17,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Routes
+app.get("/notes", function(req, res){
+    res.sendFile(path.join(__dirname, "/db/db.json"), function (err, data) {
+        if (err) {
+            throw err
+        }
+    })
+})
+
 app.get("/api/notes", function (req, res) {
-    fs.readFile(path.join(__dirname, "", "/db/db.json"), function (err, data) {
+    
+    fs.readFile(path.join(__dirname, "/db/db.json"), function (err, data) {
         if (err) {
             throw err
         }
