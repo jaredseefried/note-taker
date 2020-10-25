@@ -23,7 +23,7 @@ app.get("/api/notes", function (req, res) {
             throw err
         }
     })
-    res.sendFile(path.join(__dirname, "/db/db.json"))
+    // res.sendFile(path.join(__dirname, "/db/db.json"))
     console.log(req.body);
     res.send(req.body)
     res.end()
