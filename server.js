@@ -21,18 +21,37 @@ app.get("/api/notes", function (req, res) {
 })
 
 app.post("/api/notes", function (req, res) {
+
     res.sendFile(path.join(__dirname, "/db/db.json"), function (err, data) {
         if (err) {
             throw err
         }
-    })
 
-    fs.writeFile("database.json", function (err) {
-        // res.send("New Note Added")
-        
+        const newNote = JSON.parse(data);
+        console.log(newNote);
+        const newnote2 = req.body
+
+
+        newNote2.id = uuid.v1(); //unique ID
+        newNote.push(newNote2);
+
+        const finalNewNote = JSON.stringify(newNote);
+
+        fs.writeFile(path.join(__dirname, "./db/db.json"), finalNewNote, (err) => {
+            if (err) {
+                throw err;
+            }
+        });
+
+        res.json(newNote2);
+        res.end()
     })
-    res.end()
+    
 })
+
+
+
+
 
 app.delete("/api/notes", function (req, res) {
 
