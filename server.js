@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 const db = require("./db/db.json");
 // const uuid = require("uuid");
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4001;
 
 // Get files in the public folder 
 app.use(express.static('public'));
@@ -29,7 +29,27 @@ app.get("/api/notes", function(req, res) {
     
 });
 
-app.post("/api/notes.html", function (req, res){
+app.post("/api/notes", function (req, res){
+    fs.readFile(path.join)(__dirname, "", "./db/db.json"), function(err, data){
+        if (err){
+            throw err;
+        }
+    }
+
+    const newNote = JSON.parse(data);
+    newNote.push(req.body)
+
+    const finalNote = JSON.stringify(newNote)
+    fs.writeFile(path.join(__dirname, "./db/db.json"), function (err, data){
+        if (err){
+            throw err
+        }
+        res.json(req.body)
+    })
+
+})
+
+app.delete("/api/notes", function (req, res){
 
 })
 
