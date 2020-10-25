@@ -7,6 +7,7 @@ const db = require("./db/db.json");
 // const uuid = require("uuid");
 const PORT = process.env.PORT || 4001;
 
+
 // Get files in the public folder 
 app.use(express.static('public'));
 
@@ -15,42 +16,25 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //Routes
-app.get("/api/notes", function(req, res) {
-    
-    fs.readFile(path.join)(__dirname, "", "./db/db.json"), function(err, data){
-        if (err){
-            throw err;
-        }
-        const notes = JSON.parse(data);
-        res.json(notes);
-    }
+app.get("/notes", function(req, res) {
+    res.sendFile(path.join(__dirname, "./public/notes.html"))
+})
 
-    res.end();
-    
-});
+app.get("/api/notes", function(req, res){
+    res.sendFile(path.join(__dirname, "./public/notes.html"))
+})
 
 app.post("/api/notes", function (req, res){
-    fs.readFile(path.join)(__dirname, "", "./db/db.json"), function(err, data){
-        if (err){
-            throw err;
-        }
-    }
-
-    const newNote = JSON.parse(data);
-    newNote.push(req.body)
-
-    const finalNote = JSON.stringify(newNote)
-    fs.writeFile(path.join(__dirname, "./db/db.json"), function (err, data){
+    let newNote = req.body
+    let notesDB = JSON.parse(fs.readFile("./db/db.json"), function(err, data){
         if (err){
             throw err
         }
-        res.json(req.body)
     })
+    notesDB.push(newNote)
 
-})
-
-app.delete("/api/notes", function (req, res){
-
+    fs.writeFileSync("./db/db.json", JSON.stringify(notesDB))
+    res.join(notesDB)
 })
 
 
