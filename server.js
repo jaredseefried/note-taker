@@ -4,6 +4,7 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const db = require("./db/db.json");
+const uuid = require("uuid")
 
 const PORT = process.env.PORT || 4001;
 
@@ -20,7 +21,7 @@ app.use(express.json());
 // GET the notes from the db.json file. 
 app.get("/api/notes", function (req, res) {
 
-    // Using the file system, read the dc.json file, parse the data and send it the browser
+    // Using the file system, read the db.json file, parse the data and send it the browser
     fs.readFile(path.join(__dirname, "", "./db/db.json"), (err, data) => {
         if (err) throw err;
         const notes = JSON.parse(data)
@@ -36,8 +37,10 @@ app.post("/api/notes", function (req, res) {
     fs.readFile(path.join(__dirname, "./db/db.json"), function (err, data) {
         if (err) throw err;
         const noteObj = JSON.parse(data);
-        noteObj.push(req.body);
-        
+        const notes = req.body;
+        notes.id = uuid.v1();
+        noteObj.push(notes);
+    
         const noteStr = JSON.stringify(noteObj);
         fs.writeFile(path.join(__dirname, "./db/db.json"), noteStr, function (err) {
             if (err) throw err;
@@ -48,7 +51,7 @@ app.post("/api/notes", function (req, res) {
 
 // Delete the specified Note
 app.delete("/api/notes", function (req, res) {
-
+ 
 
 })
 
