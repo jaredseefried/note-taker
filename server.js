@@ -36,9 +36,9 @@ app.post("/api/notes", function (req, res) {
     fs.readFile(path.join(__dirname, "./db/db.json"), function (err, data) {
         if (err) throw err;
         const noteObj = JSON.parse(data);
-        const note = req.body;
+        const notes = req.body;
         notes.id = uuid.v1();
-        noteObj.push(note);
+        noteObj.push(notes);
 
         // Turn the note object into a string and write it to the JSON file. 
         const noteStr = JSON.stringify(noteObj);
