@@ -40,7 +40,7 @@ app.post("/api/notes", function (req, res) {
         const notes = req.body;
         notes.id = uuid.v1();
         noteObj.push(notes);
-    
+
         const noteStr = JSON.stringify(noteObj);
         fs.writeFile(path.join(__dirname, "./db/db.json"), noteStr, function (err) {
             if (err) throw err;
@@ -50,19 +50,19 @@ app.post("/api/notes", function (req, res) {
 })
 
 // Delete the specified Note
-app.delete("/api/notes", function (req, res) {
+app.delete("/api/notes/:id", function (req, res) {
     const noteID = req.params.id;
     fs.readFile(path.join(__dirname, "", "./db/db.json"), function (err, data) {
         if (err) throw err;
         const notes = JSON.parse(data);
         const deleteNote = notes.filter((noteObj) => noteObj.id !== noteID)
-        fs.writeFile("./db/db.json", JSON.stringify(deleteNote), function (err, data){
-            if (err) throw err
+        fs.writeFile("./db/db.json", JSON.stringify(deleteNote), function (err, data) {
+            if (err) throw err;
         })
         res.json(deleteNote)
     })
-    
 })
+            
 
 // Listener
 app.listen(PORT, () => {
